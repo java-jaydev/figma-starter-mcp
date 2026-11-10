@@ -1,0 +1,9 @@
+{
+  "name": "figma-starter",
+  "version": "0.1.0",
+  "description": "Local MCP bridge and skills that let AI coding agents read and write Figma on the free Starter plan, with developer-friendly design rules",
+  "homepage": "https://github.com/java-jaydev/figma-starter-mcp",
+  "repository": "https://github.com/java-jaydev/figma-starter-mcp",
+  "license": "MIT",
+  "keywords": ["figma", "mcp", "design-tokens", "starter-plan", "figma-plugin"]
+}

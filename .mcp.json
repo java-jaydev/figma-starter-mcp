@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "figma-starter": {
+      "command": "npx",
+      "args": ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.0"]
+    }
+  }
+}

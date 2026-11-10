@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-label="figma-starter-mcp banner">
+  <defs>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.2" fill="#D9DCE3"/></pattern>
+  </defs>
+  <rect width="960" height="260" rx="16" fill="#F7F7FA"/>
+  <rect width="960" height="260" rx="16" fill="url(#dots)"/>
+  <text x="60" y="92" font-size="40" font-weight="700" fill="#16181D" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">figma-starter-mcp</text>
+  <text x="60" y="126" font-size="17" fill="#5B6170" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Let AI agents read and write Figma on the Starter plan</text>
+  <text x="60" y="164" font-size="12" fill="#5B6170" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">rules  ·  lint  ·  figma to code</text>
+  <rect x="60" y="178" width="26" height="26" rx="6" fill="#FFFFFF" stroke="#D9DCE3"/><rect x="94" y="178" width="26" height="26" rx="6" fill="#F4F5F7" stroke="#D9DCE3"/><rect x="128" y="178" width="26" height="26" rx="6" fill="#16181D" stroke="#D9DCE3"/><rect x="162" y="178" width="26" height="26" rx="6" fill="#5B6170" stroke="#D9DCE3"/><rect x="196" y="178" width="26" height="26" rx="6" fill="#4F46E5" stroke="#D9DCE3"/><rect x="230" y="178" width="26" height="26" rx="6" fill="#D9DCE3" stroke="#D9DCE3"/>
+  <g>
+    <rect x="470" y="70" width="130" height="150" rx="6" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="6 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <text x="474" y="62" font-size="11" fill="#4F46E5" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">01 Foundations</text>
+    <rect x="484" y="88" width="102" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="484" y="106" width="70" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="484" y="180" width="102" height="24" rx="6" fill="#4F46E5" opacity="0.25"/>
+  </g>
+  <g>
+    <rect x="620" y="70" width="130" height="150" rx="6" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="6 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <text x="624" y="62" font-size="11" fill="#4F46E5" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">02 Components</text>
+    <rect x="634" y="88" width="102" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="634" y="106" width="70" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="634" y="180" width="102" height="24" rx="6" fill="#4F46E5" opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="770" y="70" width="130" height="150" rx="6" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5" stroke-dasharray="6 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <text x="774" y="62" font-size="11" fill="#4F46E5" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">03 Patterns</text>
+    <rect x="784" y="88" width="102" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="784" y="106" width="70" height="10" rx="3" fill="#D9DCE3"/>
+    <rect x="784" y="180" width="102" height="24" rx="6" fill="#4F46E5" opacity="0.75"/>
+  </g>
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="420,210; 640,140; 820,190; 420,210" dur="7s" repeatCount="indefinite"/>
+    <path d="M0 0 L0 18 L5 13 L9 22 L12 21 L8 12 L15 12 Z" fill="#16181D" stroke="#F7F7FA" stroke-width="1.2"/>
+  </g>
+</svg>
