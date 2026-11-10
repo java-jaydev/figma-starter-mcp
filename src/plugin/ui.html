@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0;
+    padding: 12px;
+    font: 12px/1.4 Inter, system-ui, sans-serif;
+    color: var(--figma-color-text, #1e1e1e);
+    background: var(--figma-color-bg, #fff);
+  }
+  h1 { font-size: 13px; margin: 0 0 8px; display: flex; gap: 8px; align-items: center; }
+  #status::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: #b3b3b3; }
+  #status[data-status="connected"]::before { background: #14ae5c; }
+  #status[data-status="untrusted"]::before { background: #f24822; }
+  .muted { color: var(--figma-color-text-secondary, #757575); }
+  p { margin: 4px 0 10px; }
+  form { display: flex; gap: 6px; margin-bottom: 10px; }
+  input {
+    flex: 1; min-width: 0; padding: 6px 8px; font: inherit; letter-spacing: 0.15em; text-transform: uppercase;
+    color: inherit; background: transparent; border: 1px solid var(--figma-color-border, #e6e6e6); border-radius: 4px;
+  }
+  button {
+    padding: 6px 10px; font: inherit; cursor: pointer; border-radius: 4px;
+    color: inherit; background: transparent; border: 1px solid var(--figma-color-border, #e6e6e6);
+  }
+  button.primary { color: var(--figma-color-text-onbrand, #fff); background: var(--figma-color-bg-brand, #0d99ff); border-color: transparent; }
+  #confirm { padding: 10px; margin-bottom: 10px; border: 1px solid var(--figma-color-border-warning, #ffc21a); border-radius: 6px; }
+  #confirm .actions { display: flex; gap: 6px; justify-content: flex-end; }
+  h2 { font-size: 11px; font-weight: 600; margin: 12px 0 4px; }
+  ol { margin: 0; padding: 0; list-style: none; }
+  li { padding: 3px 0; border-bottom: 1px solid var(--figma-color-border, #e6e6e6); overflow-wrap: anywhere; }
+  li[data-state="error"] { color: var(--figma-color-text-danger, #dc3412); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+  <h1><span id="status">Starting</span></h1>
+  <p class="muted">File: <span id="file"></span></p>
+  <p id="message" role="status"></p>
+  <form id="pair" hidden>
+    <input id="code" maxlength="16" autocomplete="off" spellcheck="false" placeholder="ABC123" aria-label="Pairing code">
+    <button class="primary" type="submit">Pair</button>
+  </form>
+  <section id="confirm" role="alertdialog" aria-labelledby="confirm-text" hidden>
+    <p id="confirm-text"></p>
+    <div class="actions">
+      <button id="decline" type="button">Decline</button>
+      <button id="approve" class="primary" type="button">Approve</button>
+    </div>
+  </section>
+  <button id="pair-again" type="button" hidden>Pair again</button>
+  <button id="unpair" type="button" hidden>Unpair</button>
+  <h2>Recent commands</h2>
+  <ol id="log"></ol>
+  <!-- UI_SCRIPT -->
+</body>
+</html>
