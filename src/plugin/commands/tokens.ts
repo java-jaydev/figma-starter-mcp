@@ -128,7 +128,9 @@ register("bind_variable", async (args) => {
     if (!Array.isArray(paints) || paints.length === 0 || paints[0].type !== "SOLID") {
       throw new PluginError("INVALID_INPUT", `${field} of ${node.name} has no solid paint to bind`, "Set a solid paint first.");
     }
-    const next = [figma.variables.setBoundVariableForPaint(paints[0] as SolidPaint, "color", variable as Variable), ...paints.slice(1)];
+    // New components carry a hidden default fill; binding a color means the agent wants it shown.
+    const first = { ...(paints[0] as SolidPaint), visible: true };
+    const next = [figma.variables.setBoundVariableForPaint(first, "color", variable as Variable), ...paints.slice(1)];
     target[field] = next;
     return { nodeId: node.id, field, var: args.var };
   }

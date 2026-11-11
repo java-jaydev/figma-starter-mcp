@@ -168,6 +168,13 @@ describe("bind_variable", () => {
     expect(f.boundVariables.itemSpacing.id).toBe(spaceVar.id);
   });
 
+  it("shows a component's hidden default fill when binding a color to it", async () => {
+    await run("upsert_variables", vars());
+    const c = fake.figma.createComponent() as any;
+    expect((await run("bind_variable", { nodeId: c.id, field: "fills", var: "color/bg/default" })).ok).toBe(true);
+    expect(c.fills[0].visible).toBe(true);
+  });
+
   it("binds cornerRadius to all four corners", async () => {
     await run("upsert_variables", vars());
     const f = fake.figma.createFrame() as any;

@@ -27,6 +27,21 @@ describe("lint", () => {
     expect(r.data.truncated).toBeUndefined();
   });
 
+  it("does not flag a section's default look", async () => {
+    await run("create_section", { name: "Onboarding" });
+    const r: any = await run("lint", { scope: "page" });
+    expect(r.data.findings).toEqual([]);
+  });
+
+  it("does not flag the font size of text that uses a text style", async () => {
+    await run("upsert_variables", { collection: "Tokens", variables: [{ name: "color/text/default", type: "COLOR", value: "#111111" }] });
+    await run("upsert_text_styles", { styles: [{ name: "body/md", family: "Inter", style: "Regular", size: { raw: 14, reason: "r" }, lineHeight: { raw: 20, reason: "r" } }] });
+    const f: any = await run("create_frame", { name: "Card" });
+    await run("create_text", { parentId: f.data.id, text: "Hi", textStyle: "body/md", fill: { var: "color/text/default" } });
+    const r: any = await run("lint", { scope: "page" });
+    expect(r.data.findings).toEqual([]);
+  });
+
   it("reports nothing for a plain frame created with defaults", async () => {
     await run("create_frame", { name: "Card" });
     const r: any = await run("lint", { scope: "page" });
