@@ -10,6 +10,7 @@ export const tokenRef = z.union([
 ]);
 
 const ids = z.array(nonEmpty).min(1);
+const limits = { maxDepth: z.number().int().min(0).optional(), maxNodes: z.number().int().min(1).optional() };
 const align = z.enum(["MIN", "CENTER", "MAX", "SPACE_BETWEEN"]);
 const sizing = z.enum(["FIXED", "HUG", "FILL"]);
 
@@ -49,10 +50,18 @@ const base: ToolDef[] = [
   {
     name: "read_selection",
     description: "Summarize the current Figma selection. Stops at maxDepth (default 4) and maxNodes (default 300) and reports how many nodes were omitted.",
-    input: z.strictObject({ maxDepth: z.number().int().min(0).optional(), maxNodes: z.number().int().min(1).optional() }),
+    input: z.strictObject(limits),
   },
-  { name: "read_nodes", description: "Summarize nodes by id.", input: z.strictObject({ ids }) },
-  { name: "read_page", description: "Summarize the current page.", input: empty },
+  {
+    name: "read_nodes",
+    description: "Summarize nodes by id. Stops at maxDepth (default 4) and maxNodes (default 300). Use it to read a subtree that another read reported as omitted.",
+    input: z.strictObject({ ids, ...limits }),
+  },
+  {
+    name: "read_page",
+    description: "Summarize the current page. Stops at maxDepth (default 2) and maxNodes (default 300); a node with omitted children can be read further with read_nodes.",
+    input: z.strictObject(limits),
+  },
   { name: "list_variables", description: "List variable collections, their modes and variables.", input: empty },
   { name: "list_styles", description: "List text styles.", input: empty },
   { name: "list_components", description: "List components with their ids and property definitions.", input: empty },
@@ -116,12 +125,14 @@ const base: ToolDef[] = [
   },
   {
     name: "add_component_property",
-    description: "Add a BOOLEAN, TEXT or INSTANCE_SWAP property to a component. Variants are not supported in v1; the user makes them in Figma (select components, Combine as variants).",
+    description:
+      "Add a BOOLEAN, TEXT or INSTANCE_SWAP property to a component and link it to a layer inside it: TEXT drives the layer's text, BOOLEAN its visibility, INSTANCE_SWAP its component. TEXT links to the only text layer when layerId is omitted; BOOLEAN and INSTANCE_SWAP link only when layerId is given. Variants are not supported in v1; the user makes them in Figma (select components, Combine as variants).",
     input: z.strictObject({
       componentId: nonEmpty,
       name: nonEmpty,
       type: z.enum(["BOOLEAN", "TEXT", "INSTANCE_SWAP"]),
       default: z.union([z.string(), z.boolean()]),
+      layerId: nonEmpty.optional(),
     }),
   },
   {
