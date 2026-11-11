@@ -1,11 +1,11 @@
 {
   "name": "figma-starter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local MCP bridge that lets AI coding agents read and write Figma on the free Starter plan, with developer-friendly design rules.",
   "mcpServers": {
     "figma-starter": {
       "command": "npx",
-      "args": ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+      "args": ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
     }
   }
 }

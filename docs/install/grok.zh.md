@@ -9,7 +9,7 @@
 用 CLI 注册。`--` 后面是服务器的启动命令。
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 grok mcp doctor
 ```
 
@@ -18,7 +18,7 @@ grok mcp doctor
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
 ```
 
 在仓库里加 `--scope project` 会保存到 `.grok/config.toml`。文档说明 Grok Build 还会读取 `~/.claude.json`、`.cursor/mcp.json` 和项目里的 `.mcp.json`,所以在 clone 了本仓库的文件夹里,自带的 `.mcp.json` 可能会直接生效。用 `grok inspect` 查看每个服务器是从哪里加载的。

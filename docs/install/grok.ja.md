@@ -9,7 +9,7 @@
 CLI で登録します。`--` の後ろがサーバーの実行コマンドです。
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 grok mcp doctor
 ```
 
@@ -18,7 +18,7 @@ grok mcp doctor
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
 ```
 
 リポジトリの中で `--scope project` を付けると `.grok/config.toml` に保存されます。ドキュメントによると Grok Build は `~/.claude.json`、`.cursor/mcp.json`、プロジェクトの `.mcp.json` も読むので、このリポジトリを clone したフォルダでは同梱の `.mcp.json` がそのまま使われる場合があります。`grok inspect` でどこから読み込んだか確認してください。

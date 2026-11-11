@@ -22,7 +22,7 @@ async function statusResult(bridge: Bridge, renew: boolean): Promise<ToolResult>
 }
 
 export function createMcpServer(bridge: Bridge): McpServer {
-  const mcp = new McpServer({ name: "figma-starter-mcp", version: "0.1.1" });
+  const mcp = new McpServer({ name: "figma-starter-mcp", version: "0.1.2" });
   const tools = new Map(TOOLS.map((t) => [t.name as string, t]));
   for (const t of TOOLS) {
     // Registered for tools/list (JSON schema); calls are handled below so a bad input

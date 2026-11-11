@@ -9,7 +9,7 @@
 用 CLI 注册 (官方文档的格式是 `codex mcp add <名称> -- <启动命令>`)。
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 codex mcp list
 ```
 
@@ -18,7 +18,7 @@ codex mcp list
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
 ```
 
 在 Codex 里输入 `/mcp` 就能看到已启用的服务器。

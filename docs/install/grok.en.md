@@ -9,7 +9,7 @@ Checked 2026-11-10. Source: [Grok Build MCP Servers docs](https://docs.x.ai/buil
 Use the CLI. Everything after `--` is the server command.
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 grok mcp doctor
 ```
 
@@ -18,7 +18,7 @@ Or write it into `~/.grok/config.toml`.
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
 ```
 
 Inside a repo, `--scope project` saves it to `.grok/config.toml`. The docs say Grok Build also reads `~/.claude.json`, `.cursor/mcp.json` and a project `.mcp.json`, so in a clone of this repo the bundled `.mcp.json` may be picked up as is. Run `grok inspect` to see where each server was loaded from.

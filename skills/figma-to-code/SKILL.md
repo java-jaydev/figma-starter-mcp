@@ -9,7 +9,7 @@ description: Figma 에서 선택한 프레임을 프로젝트 코드로 옮긴�
 
 ## 순서
 
-1. **연결 확인**: `status`. 연결 안 됐으면 Figma 데스크톱 앱에서 Plugins > Development > figma-starter 를 실행하고 `status` 가 준 코드를 입력하게 안내한다. 코드가 없으면 `renewPairingCode: true`. 처음이면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path` 의 manifest 를 Import plugin from manifest 로 불러오게 한다.
+1. **연결 확인**: `status`. 연결 안 됐으면 Figma 데스크톱 앱에서 Plugins > Development > figma-starter 를 실행하고 `status` 가 준 코드를 입력하게 안내한다. 코드가 없으면 `renewPairingCode: true`. 처음이면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path` 의 manifest 를 Import plugin from manifest 로 불러오게 한다.
 2. **선택 노드 읽기**: `read_selection` (깊거나 크면 생략된 노드 수가 보고되니 `read_nodes` 로 해당 id 를 더 읽는다). 구조, 오토 레이아웃, 변수 바인딩, 컴포넌트 인스턴스와 속성을 얻는다. 공식 Figma MCP 서버는 월 호출 한도 때문에 읽기에 제안하지 않는다.
 3. **프로젝트 코드 조사**: 코드를 쓰기 전에 저장소에서 토큰 파일(CSS 변수, 테마, tailwind 설정, tokens.ts 등)과 기존 컴포넌트를 먼저 찾는다. 프레임워크와 스타일 방식도 여기서 확인한다.
 4. **대응표 만들기**:
