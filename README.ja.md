@@ -48,7 +48,7 @@
 
 ## 📦 インストール
 
-必要なもの: Node.js (npx)、Figma デスクトップアプリ。4 つのツールすべてが同じサーバーコマンド (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.0`) を使います。
+必要なもの: Node.js (npx)、Figma デスクトップアプリ。4 つのツールすべてが同じサーバーコマンド (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`) を使います。
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (MCP サーバー登録 + スキルをコピー)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (MCP サーバー登録 + スキルをコピー)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,14 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. プラグインのパスを確認します。
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
    ```
 2. Figma デスクトップアプリで **Plugins > Development > Import plugin from manifest** を開き、そのパスの `manifest.json` を選びます。
 3. **Plugins > Development > figma-starter** を実行します。
 4. AI エージェントに「figma-starter の状態を教えて」と頼み、`status` ツールが返す 6 文字のコードを受け取ります。
 5. プラグインのウィンドウにそのコードを入力します。
 
-接続は 1 回だけで済みます。ペアリングを消すには `npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 unpair` を実行し、AI セッションをすべて閉じてからもう一度始めてください。
+接続は 1 回だけで済みます。ペアリングを消すには `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair` を実行し、AI セッションをすべて閉じてからもう一度始めてください。
 
 <a id="rules"></a>
 
@@ -169,7 +169,7 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 ## 🔒 セキュリティノート
 
-- **localhost のみ**: サーバーは `127.0.0.1` だけで待ち受けます。プラグインのマニフェストも `ws://localhost:39917` と `ws://127.0.0.1:39917` だけを許可します。
+- **localhost のみ**: サーバーは `127.0.0.1` だけで待ち受けます。プラグインのマニフェストも `ws://localhost:39917` だけを許可します。Figma は `devAllowedDomains` に IP アドレスを受け付けません。
 - **ペアリング**: 6 文字のコードを 1 回入力し、サーバーとプラグインが challenge-response で互いを確認します。
 - **秘密値の保護**: ペアリング後は秘密値を二度と送らず、以降のコマンドは署名して送ります。
 - **ペアリング試行の制限**: コードの入力ミスには throttle がかかります。

@@ -16,9 +16,9 @@ import {
   type ClientDeps,
   type SocketLike,
 } from "../../src/plugin/ui/client.ts";
-import { randomNonce, webCryptoHmac } from "../../src/plugin/ui/webcrypto.ts";
+import { randomNonce, uiHmac } from "../../src/plugin/ui/webcrypto.ts";
 
-const hmac = webCryptoHmac(globalThis.crypto.subtle);
+const hmac = uiHmac;
 
 class FakeSocket implements SocketLike {
   sent: any[] = [];
@@ -92,7 +92,7 @@ async function welcome(h: ReturnType<typeof harness>, key: string, extra: { secr
 
 const signed = (secret: string, cmd: Command) => ({ t: "cmd", sig: sign(secret, cmdSigPayload(cmd)), cmd });
 
-describe("webcrypto helpers", () => {
+describe("ui crypto helpers", () => {
   it("HMAC matches the server's sign()", async () => {
     expect(await hmac("key", "payload")).toBe(sign("key", "payload"));
   });
@@ -117,7 +117,7 @@ describe("ui client", () => {
     h.client.init(undefined, "Design System");
     h.client.pair("  ab3k9z \n");
     expect(h.socket().url).toBe(HUB_URL);
-    expect(HUB_URL).toBe("ws://127.0.0.1:39917");
+    expect(HUB_URL).toBe("ws://localhost:39917");
     const hello = await welcome(h, "AB3K9Z", { secret: "new-secret" });
     expect(hello).toMatchObject({ t: "hello-plugin", pair: true, fileName: "Design System" });
     expect(h.toMain).toEqual([{ type: "save-secret", secret: "new-secret" }]);

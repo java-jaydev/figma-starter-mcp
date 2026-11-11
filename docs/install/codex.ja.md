@@ -9,7 +9,7 @@
 CLI で登録します (公式ドキュメントの形式は `codex mcp add <名前> -- <実行コマンド>`)。
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 codex mcp list
 ```
 
@@ -18,7 +18,7 @@ codex mcp list
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.0"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
 ```
 
 Codex の中で `/mcp` と入力すると、登録済みのサーバーが見えます。

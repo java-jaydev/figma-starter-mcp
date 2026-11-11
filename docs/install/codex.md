@@ -9,7 +9,7 @@
 CLI 로 등록합니다 (공식 문서의 `codex mcp add <이름> -- <실행 명령>` 형태).
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 codex mcp list
 ```
 
@@ -18,7 +18,7 @@ codex mcp list
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.0"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
 ```
 
 Codex 안에서 `/mcp` 를 입력하면 등록된 서버가 보입니다.

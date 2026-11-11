@@ -246,9 +246,17 @@ export function createFakeFigma(opts: { fileName?: string; fonts?: string[] } = 
         counterAxisAlignItems: "MIN",
         cornerRadius: 0,
       }, Object.getOwnPropertyDescriptors(sizingAccessors()))),
-    createSection: () => create("SECTION"),
+    // Real Figma sections come with a white fill, a faint stroke and radius 2 (seen 2026-11-11).
+    createSection: () =>
+      create("SECTION", {
+        fills: [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }],
+        strokes: [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0.1 }],
+        cornerRadius: 2,
+      }),
     createComponent: () => {
       const c: FakeNode = create("COMPONENT", {
+        // New components carry a hidden white fill in Figma (seen 2026-11-11).
+        fills: [{ type: "SOLID", color: { r: 1, g: 1, b: 1 }, visible: false }],
         componentPropertyDefinitions: {} as Record<string, unknown>,
         addComponentProperty(name: string, type: string, def: unknown) {
           const key = `${name}#${++seq}`;

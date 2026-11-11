@@ -48,7 +48,7 @@
 
 ## 📦 설치
 
-필요한 것: Node.js(npx), Figma 데스크톱 앱. 네 가지 도구 모두 같은 서버 명령(`npx -y github:java-jaydev/figma-starter-mcp#v0.1.0`)을 씁니다.
+필요한 것: Node.js(npx), Figma 데스크톱 앱. 네 가지 도구 모두 같은 서버 명령(`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`)을 씁니다.
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (MCP 서버 등록 + 스킬 복사)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (MCP 서버 등록 + 스킬 복사)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,14 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. 플러그인 경로를 확인합니다.
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
    ```
 2. Figma 데스크톱 앱에서 **Plugins > Development > Import plugin from manifest** 를 열고 위 경로의 `manifest.json` 을 고릅니다.
 3. **Plugins > Development > figma-starter** 를 실행합니다.
 4. AI 에이전트에게 "figma-starter 상태 알려줘" 라고 해서 `status` 도구가 주는 6자리 코드를 받습니다.
 5. 플러그인 창에 그 코드를 입력합니다.
 
-연결은 한 번만 하면 됩니다. 페어링을 지우려면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 unpair` 를 실행하고 AI 세션을 모두 닫았다가 다시 시작하세요.
+연결은 한 번만 하면 됩니다. 페어링을 지우려면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair` 를 실행하고 AI 세션을 모두 닫았다가 다시 시작하세요.
 
 <a id="rules"></a>
 
@@ -169,7 +169,7 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 ## 🔒 보안 노트
 
-- **localhost 전용**: 서버는 `127.0.0.1` 에서만 받습니다. 플러그인 매니페스트도 `ws://localhost:39917`, `ws://127.0.0.1:39917` 만 허용합니다.
+- **localhost 전용**: 서버는 `127.0.0.1` 에서만 받습니다. 플러그인 매니페스트도 `ws://localhost:39917` 만 허용합니다. Figma 는 `devAllowedDomains` 에 IP 주소를 받지 않습니다.
 - **페어링**: 6자리 코드를 한 번 입력하고, 서버와 플러그인이 서로 상대를 확인하는 challenge-response 를 거칩니다.
 - **비밀값 보호**: 페어링이 끝난 뒤에는 비밀값을 다시 보내지 않고, 이후 명령은 서명해서 보냅니다.
 - **페어링 시도 제한**: 코드를 틀리게 입력하는 시도에는 throttle 이 걸립니다.

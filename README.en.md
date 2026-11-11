@@ -48,7 +48,7 @@ The skills (`figma-build`, `figma-to-code`) teach the agent this order. After in
 
 ## 📦 Install
 
-You need Node.js (for npx) and the Figma desktop app. All four tools use the same server command (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.0`).
+You need Node.js (for npx) and the Figma desktop app. All four tools use the same server command (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`).
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@ The repo's `.mcp.json` registers the MCP server.
 <summary><b>Codex</b> (register MCP server + copy skills)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (register MCP server + copy skills)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,14 @@ Details and verification status: [Install on Grok Build](docs/install/grok.en.md
 
 1. Find the plugin path.
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
    ```
 2. In the Figma desktop app, open **Plugins > Development > Import plugin from manifest** and pick the `manifest.json` at that path.
 3. Run **Plugins > Development > figma-starter**.
 4. Ask your AI agent "what is the figma-starter status?" to get the 6-character code from the `status` tool.
 5. Enter that code in the plugin window.
 
-You only pair once. To clear the pairing, run `npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 unpair`, close all AI sessions, and start again.
+You only pair once. To clear the pairing, run `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair`, close all AI sessions, and start again.
 
 <a id="rules"></a>
 
@@ -169,7 +169,7 @@ This tool is not affiliated with or endorsed by Figma. Please read the following
 
 ## 🔒 Security notes
 
-- **Localhost only**: the server listens on `127.0.0.1` only. The plugin manifest allows only `ws://localhost:39917` and `ws://127.0.0.1:39917`.
+- **Localhost only**: the server listens on `127.0.0.1` only. The plugin manifest allows only `ws://localhost:39917`. Figma rejects IP addresses in `devAllowedDomains`.
 - **Pairing**: you enter a 6-character code once, and the server and plugin verify each other through a challenge-response.
 - **Secrets protected**: after pairing, secrets are never sent again, and every later command is signed.
 - **Pairing throttle**: wrong-code attempts are throttled.

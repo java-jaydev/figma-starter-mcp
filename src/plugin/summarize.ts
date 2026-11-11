@@ -29,7 +29,8 @@ async function paints(list: unknown, aliases: unknown): Promise<Bound[] | undefi
     const p = list[i];
     if (p.visible === false) continue;
     const raw = p.type === "SOLID" ? toHex(p.color, p.opacity ?? 1) : String(p.type);
-    out.push(await bound((aliases as unknown[] | undefined)?.[i], raw));
+    // The paint's own binding is authoritative; node.boundVariables.fills mirrors it in Figma.
+    out.push(await bound(p.boundVariables?.color ?? (aliases as unknown[] | undefined)?.[i], raw));
   }
   return out;
 }
@@ -72,22 +73,26 @@ async function walk(node: any, depthLeft: number, state: { budget: number }): Pr
     }
   }
 
-  const fills = await paints(node.fills, bv.fills);
-  if (fills?.length) s.fills = fills;
-  const strokes = await paints(node.strokes, bv.strokes);
-  if (strokes?.length) s.strokes = strokes;
+  // A section's fill, stroke and radius are Figma's canvas chrome, not design values.
+  if (node.type !== "SECTION") {
+    const fills = await paints(node.fills, bv.fills);
+    if (fills?.length) s.fills = fills;
+    const strokes = await paints(node.strokes, bv.strokes);
+    if (strokes?.length) s.strokes = strokes;
 
-  if (typeof node.cornerRadius === "number" && node.cornerRadius > 0) {
-    s.radius = await bound(bv.topLeftRadius, node.cornerRadius);
+    if (typeof node.cornerRadius === "number" && node.cornerRadius > 0) {
+      s.radius = await bound(bv.topLeftRadius, node.cornerRadius);
+    }
   }
 
   if (node.type === "TEXT") {
     s.text = node.characters;
-    if (typeof node.fontSize === "number") s.fontSize = await bound(bv.fontSize, node.fontSize);
     if (typeof node.textStyleId === "string" && node.textStyleId) {
       const style = await figma.getStyleByIdAsync(node.textStyleId);
       if (style) s.textStyle = style.name;
     }
+    // A text style owns the size (and its own variable bindings), so only unstyled text reports one.
+    if (!s.textStyle && typeof node.fontSize === "number") s.fontSize = await bound(bv.fontSize, node.fontSize);
   }
 
   if (node.type === "INSTANCE") {
