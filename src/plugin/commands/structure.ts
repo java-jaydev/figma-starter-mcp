@@ -213,7 +213,7 @@ async function propertyLayer(component: ComponentNode, type: string, layerId: un
     if (!p) throw new PluginError("INVALID_INPUT", `Layer ${layer.id} is not inside component ${component.id}`, "Pass the id of a layer inside this component.");
     const need = { TEXT: "TEXT", INSTANCE_SWAP: "INSTANCE" }[type];
     if (need && layer.type !== need) {
-      throw new PluginError("INVALID_INPUT", `A ${type} property needs a ${need} layer, but ${layer.id} is ${layer.type}`, `Pass the id of a ${need} layer inside this component.`);
+      throw new PluginError("INVALID_INPUT", `${type} properties link to ${need} layers, but ${layer.id} is ${layer.type}`, `Pass the id of a ${need} layer inside this component.`);
     }
     return layer;
   }
