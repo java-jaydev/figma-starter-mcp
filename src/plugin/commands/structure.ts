@@ -203,6 +203,33 @@ register("create_component", async (args) => {
   return { id: c.id, name: c.name };
 });
 
+// The layer a new property drives. Checked before the property is added, so a bad layerId adds nothing.
+// TEXT links to the only text layer when layerId is omitted; BOOLEAN and INSTANCE_SWAP link only on request.
+async function propertyLayer(component: ComponentNode, type: string, layerId: unknown): Promise<SceneNode | undefined> {
+  if (typeof layerId === "string") {
+    const layer = await getNode(layerId);
+    let p = layer.parent;
+    while (p && p !== component) p = p.parent;
+    if (!p) throw new PluginError("INVALID_INPUT", `Layer ${layer.id} is not inside component ${component.id}`, "Pass the id of a layer inside this component.");
+    const need = { TEXT: "TEXT", INSTANCE_SWAP: "INSTANCE" }[type];
+    if (need && layer.type !== need) {
+      throw new PluginError("INVALID_INPUT", `${type} properties link to ${need} layers, but ${layer.id} is ${layer.type}`, `Pass the id of a ${need} layer inside this component.`);
+    }
+    return layer;
+  }
+  if (type !== "TEXT") return undefined;
+  const texts = component.findAllWithCriteria({ types: ["TEXT"] });
+  if (texts.length === 1) return texts[0];
+  if (texts.length === 0) {
+    throw new PluginError("INVALID_INPUT", `Component ${component.id} has no text layer for a TEXT property`, "Add the text first with create_text, then add the property.");
+  }
+  throw new PluginError(
+    "INVALID_INPUT",
+    `Component ${component.id} has ${texts.length} text layers`,
+    `Pass layerId, one of: ${texts.map((t) => `${t.id} (${t.name})`).join(", ")}`,
+  );
+}
+
 register("add_component_property", async (args) => {
   if (!isPropName(args.name)) {
     throw new PluginError("RULE_VIOLATION", `"${args.name}" is not a property name`, "Use camelCase, e.g. label or isDisabled.");
@@ -222,9 +249,13 @@ register("add_component_property", async (args) => {
   if (expected && typeof args.default !== expected) {
     throw new PluginError("INVALID_INPUT", `${args.type} property "${args.name}" needs a ${expected} default, got ${JSON.stringify(args.default)}`);
   }
+  const layer = await propertyLayer(node as ComponentNode, args.type, args.layerId);
   try {
     const key = (node as ComponentNode).addComponentProperty(args.name, args.type, args.default);
-    return { id: node.id, key };
+    if (!layer) return { id: node.id, key };
+    const field = { BOOLEAN: "visible", TEXT: "characters", INSTANCE_SWAP: "mainComponent" }[args.type as string]!;
+    layer.componentPropertyReferences = { ...(layer.componentPropertyReferences ?? {}), [field]: key };
+    return { id: node.id, key, linkedLayerId: layer.id };
   } catch (e) {
     throw new PluginError("INVALID_INPUT", `Cannot add property: ${e instanceof Error ? e.message : String(e)}`);
   }

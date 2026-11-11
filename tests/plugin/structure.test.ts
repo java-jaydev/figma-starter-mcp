@@ -200,9 +200,9 @@ describe("create_component and properties", () => {
   it("creates a component and adds a camelCase property", async () => {
     const c: any = await run("create_component", { name: "Button/Primary" });
     expect(c.ok).toBe(true);
-    const p: any = await run("add_component_property", { componentId: c.data.id, name: "label", type: "TEXT", default: "Go" });
+    const p: any = await run("add_component_property", { componentId: c.data.id, name: "isDisabled", type: "BOOLEAN", default: false });
     expect(p.ok).toBe(true);
-    const bad: any = await run("add_component_property", { componentId: c.data.id, name: "Label", type: "TEXT", default: "Go" });
+    const bad: any = await run("add_component_property", { componentId: c.data.id, name: "Disabled", type: "BOOLEAN", default: false });
     expect(bad).toMatchObject({ ok: false, code: "RULE_VIOLATION" });
   });
 
@@ -221,9 +221,67 @@ describe("create_component and properties", () => {
   });
 });
 
+describe("add_component_property links the property to a layer", () => {
+  const refs = (id: string) => (fake.nodes.get(id) as any).componentPropertyReferences;
+
+  it("links a TEXT property to the only text layer", async () => {
+    const c: any = await run("create_component", { name: "Button" });
+    const t: any = await run("create_text", { parentId: c.data.id, text: "Go", textStyle: "body/md" });
+    const p: any = await run("add_component_property", { componentId: c.data.id, name: "label", type: "TEXT", default: "Go" });
+    expect(p.data).toEqual({ id: c.data.id, key: p.data.key, linkedLayerId: t.data.id });
+    expect(refs(t.data.id)).toEqual({ characters: p.data.key });
+  });
+
+  it("asks for layerId when there are several text layers, before adding anything", async () => {
+    const c: any = await run("create_component", { name: "Card" });
+    const a: any = await run("create_text", { parentId: c.data.id, text: "Title", textStyle: "body/md" });
+    const b: any = await run("create_text", { parentId: c.data.id, text: "Body", textStyle: "body/md" });
+    const r: any = await run("add_component_property", { componentId: c.data.id, name: "title", type: "TEXT", default: "Title" });
+    expect(r).toMatchObject({ ok: false, code: "INVALID_INPUT" });
+    expect(r.hint).toContain(a.data.id);
+    expect(r.hint).toContain(b.data.id);
+    expect(fake.nodes.get(c.data.id)!.componentPropertyDefinitions).toEqual({});
+    const ok: any = await run("add_component_property", { componentId: c.data.id, name: "title", type: "TEXT", default: "Title", layerId: a.data.id });
+    expect(ok.data.linkedLayerId).toBe(a.data.id);
+    expect(refs(a.data.id)).toEqual({ characters: ok.data.key });
+    expect(refs(b.data.id)).toBeUndefined();
+  });
+
+  it("refuses a TEXT property when the component has no text layer", async () => {
+    const c: any = await run("create_component", { name: "Icon" });
+    const r: any = await run("add_component_property", { componentId: c.data.id, name: "label", type: "TEXT", default: "Go" });
+    expect(r).toMatchObject({ ok: false, code: "INVALID_INPUT" });
+    expect(r.hint).toContain("create_text");
+  });
+
+  it("links BOOLEAN to visibility and INSTANCE_SWAP to the instance only when layerId is given", async () => {
+    const icon: any = await run("create_component", { name: "Icon" });
+    const c: any = await run("create_component", { name: "Button" });
+    const i: any = await run("create_instance", { componentName: "Icon", parentId: c.data.id });
+    const b: any = await run("add_component_property", { componentId: c.data.id, name: "hasIcon", type: "BOOLEAN", default: true, layerId: i.data.id });
+    const s: any = await run("add_component_property", { componentId: c.data.id, name: "icon", type: "INSTANCE_SWAP", default: icon.data.id, layerId: i.data.id });
+    expect(refs(i.data.id)).toEqual({ visible: b.data.key, mainComponent: s.data.key });
+    const plain: any = await run("add_component_property", { componentId: c.data.id, name: "isActive", type: "BOOLEAN", default: false });
+    expect(plain.data).toEqual({ id: c.data.id, key: plain.data.key });
+  });
+
+  it("rejects a layerId outside the component or of the wrong type", async () => {
+    const c: any = await run("create_component", { name: "Button" });
+    const inside: any = await run("create_text", { parentId: c.data.id, text: "Go", textStyle: "body/md" });
+    const f: any = await run("create_frame", { name: "Elsewhere" });
+    const outside: any = await run("create_text", { parentId: f.data.id, text: "x", textStyle: "body/md" });
+    const r1: any = await run("add_component_property", { componentId: c.data.id, name: "label", type: "TEXT", default: "Go", layerId: outside.data.id });
+    expect(r1).toMatchObject({ ok: false, code: "INVALID_INPUT" });
+    const r2: any = await run("add_component_property", { componentId: c.data.id, name: "icon", type: "INSTANCE_SWAP", default: c.data.id, layerId: inside.data.id });
+    expect(r2).toMatchObject({ ok: false, code: "INVALID_INPUT" });
+    expect(fake.nodes.get(c.data.id)!.componentPropertyDefinitions).toEqual({});
+  });
+});
+
 describe("create_instance and set_instance_properties", () => {
   it("instantiates by component name and sets properties by plain name", async () => {
     const c: any = await run("create_component", { name: "Button" });
+    await run("create_text", { parentId: c.data.id, text: "Go", textStyle: "body/md" });
     await run("add_component_property", { componentId: c.data.id, name: "label", type: "TEXT", default: "Go" });
     const f: any = await run("create_frame", { name: "Card" });
     const i: any = await run("create_instance", { componentName: "Button", parentId: f.data.id });

@@ -137,6 +137,29 @@ describe("read commands", () => {
     expect(page.data.children[0].id).toBe(f.id);
   });
 
+  it("read_page stops at depth 2 by default and takes maxDepth and maxNodes", async () => {
+    const outer = fake.figma.createFrame();
+    const mid = fake.figma.createFrame();
+    const leaf = fake.figma.createFrame();
+    outer.appendChild(mid);
+    mid.appendChild(leaf);
+    const page: any = await run("read_page");
+    expect(page.data.children[0].children[0]).toMatchObject({ id: mid.id, omitted: 1 });
+    expect(page.data.children[0].children[0].children).toBeUndefined();
+    const deep: any = await run("read_page", { maxDepth: 3 });
+    expect(deep.data.children[0].children[0].children[0].id).toBe(leaf.id);
+    const few: any = await run("read_page", { maxNodes: 2 });
+    expect(few.data.children[0]).toMatchObject({ id: outer.id, children: [], omitted: 2 });
+  });
+
+  it("read_nodes takes maxDepth so an omitted subtree can be read on its own", async () => {
+    const outer = fake.figma.createFrame();
+    const inner = fake.figma.createFrame();
+    outer.appendChild(inner);
+    const r: any = await run("read_nodes", { ids: [outer.id], maxDepth: 0 });
+    expect(r.data[0]).toMatchObject({ id: outer.id, omitted: 1 });
+  });
+
   it("list_variables groups variables by collection and mode", async () => {
     const c = fake.figma.variables.createVariableCollection("Colors");
     const v = fake.figma.variables.createVariable("color/bg/default", c, "COLOR");

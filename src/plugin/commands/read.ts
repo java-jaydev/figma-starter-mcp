@@ -23,11 +23,15 @@ register("read_selection", async (args) => {
 
 register("read_nodes", async (args) => {
   const out = [];
-  for (const id of args.ids as string[]) out.push(await summarize(await nodeOrThrow(id), { maxDepth: 4, maxNodes: 300 }));
+  const opts = { maxDepth: args.maxDepth ?? 4, maxNodes: args.maxNodes ?? 300 };
+  for (const id of args.ids as string[]) out.push(await summarize(await nodeOrThrow(id), opts));
   return out;
 });
 
-register("read_page", async () => summarize(figma.currentPage as unknown as SceneNode, { maxDepth: 4, maxNodes: 300 }));
+// Pages get a shallow default: one component page at depth 4 and 300 nodes came back as 146k characters.
+register("read_page", async (args) =>
+  summarize(figma.currentPage as unknown as SceneNode, { maxDepth: args?.maxDepth ?? 2, maxNodes: args?.maxNodes ?? 300 }),
+);
 
 async function variableValue(v: unknown): Promise<unknown> {
   const x = v as { type?: string; id?: string; r?: number; g?: number; b?: number; a?: number } | string | number | boolean;
