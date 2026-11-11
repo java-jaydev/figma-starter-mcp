@@ -9,7 +9,7 @@
 CLI 로 등록합니다. `--` 뒤가 서버 실행 명령입니다.
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 grok mcp doctor
 ```
 
@@ -18,7 +18,7 @@ grok mcp doctor
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.0"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
 ```
 
 레포 안에서 `--scope project` 를 붙이면 `.grok/config.toml` 에 저장됩니다. Grok Build 는 `~/.claude.json`, `.cursor/mcp.json`, 프로젝트의 `.mcp.json` 도 함께 읽는다고 문서에 나와 있어서, 이 레포를 clone 한 폴더에서는 `.mcp.json` 이 그대로 쓰일 수 있습니다. `grok inspect` 로 어디서 읽었는지 확인하세요.
