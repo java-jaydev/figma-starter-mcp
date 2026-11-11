@@ -21,7 +21,7 @@
 
 [한국어](README.md) · [English](README.en.md) · **日本語** · [简体中文](README.zh.md)
 
-[これは何か](#what) · [インストール](#install) · [初回起動](#first-run) · [ルール](#rules) · [無料プランの上限](#limits) · [セキュリティ](#security) · [お知らせ](#legal) · [ワークショップ](#workshop) · [フォルダ構成](#structure)
+[これは何か](#what) · [インストール](#install) · [初回起動](#first-run) · [動作環境と制約](#environment) · [ルール](#rules) · [無料プランの上限](#limits) · [セキュリティ](#security) · [お知らせ](#legal) · [ワークショップ](#workshop) · [フォルダ構成](#structure)
 
 </div>
 
@@ -48,7 +48,7 @@
 
 ## 📦 インストール
 
-必要なもの: Node.js (npx)、Figma デスクトップアプリ。4 つのツールすべてが同じサーバーコマンド (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`) を使います。
+必要なもの: Node.js (npx)、Figma デスクトップアプリ。4 つのツールすべてが同じサーバーコマンド (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.2`) を使います。
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (MCP サーバー登録 + スキルをコピー)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (MCP サーバー登録 + スキルをコピー)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,38 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. プラグインのパスを確認します。
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path
    ```
 2. Figma デスクトップアプリで **Plugins > Development > Import plugin from manifest** を開き、そのパスの `manifest.json` を選びます。
 3. **Plugins > Development > figma-starter** を実行します。
 4. AI エージェントに「figma-starter の状態を教えて」と頼み、`status` ツールが返す 6 文字のコードを受け取ります。
 5. プラグインのウィンドウにそのコードを入力します。
 
-接続は 1 回だけで済みます。ペアリングを消すには `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair` を実行し、AI セッションをすべて閉じてからもう一度始めてください。
+接続は 1 回だけで済みます。ペアリングを消すには `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 unpair` を実行し、AI セッションをすべて閉じてからもう一度始めてください。
+
+<a id="environment"></a>
+
+## 🧪 確認した環境と既知の制約
+
+確認記録は [docs/verification/](docs/verification/) にあります。最終確認日は 2026-11-11 です。
+
+| 環境 | 状態 |
+|---|---|
+| macOS、Figma デスクトップアプリ、Starter プラン | 確認済み |
+| Claude Code に MCP サーバーを手動登録 (`claude mcp add`、空の npx キャッシュからインストール) | 確認済み |
+| Windows、Linux | 未確認 |
+| Claude Code プラグインマーケットプレイス、Codex、Gemini CLI、Grok Build | 未確認 |
+
+既知の制約:
+
+- Figma デスクトップアプリでのみ動作します。開発用プラグインのウィンドウを開いたままにしてください。
+- Figma が同時に実行できる開発用プラグインは 1 つだけです。別の開発用プラグインを起動すると figma-starter は閉じます。
+- バリアントは Figma で手作業で作ります (コンポーネントを選択して Combine as variants)。
+- 塗りに色変数をバインドすると、塗りの不透明度の代わりに変数値のアルファが使われます。半透明はアルファ付きの色変数で作ります。
+- 接続は開いたのに認証で失敗した場合も、プラグインのウィンドウには "Server not running" と表示されることがあります。
+- `read_page` は既定で深さ 2 までしか読みません。さらに読むノードは `read_nodes` で読みます。
+
+未確認の環境で試した方は [バグ報告フォーム](https://github.com/java-jaydev/figma-starter-mcp/issues/new?template=bug_report.yml) で教えてください。うまく動いたという報告も歓迎です。
 
 <a id="rules"></a>
 

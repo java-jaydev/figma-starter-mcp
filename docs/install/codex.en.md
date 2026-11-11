@@ -9,7 +9,7 @@ Checked 2026-11-10. Source: [Codex MCP docs](https://learn.chatgpt.com/docs/exte
 Use the CLI (the documented form is `codex mcp add <name> -- <command>`).
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 codex mcp list
 ```
 
@@ -18,7 +18,7 @@ Or write it into `~/.codex/config.toml`.
 ```toml
 [mcp_servers.figma-starter]
 command = "npx"
-args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.1"]
+args = ["-y", "github:java-jaydev/figma-starter-mcp#v0.1.2"]
 ```
 
 Type `/mcp` inside Codex to see the active servers.

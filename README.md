@@ -21,7 +21,7 @@
 
 **한국어** · [English](README.en.md) · [日本語](README.ja.md) · [简体中文](README.zh.md)
 
-[무엇인가](#what) · [설치](#install) · [첫 실행](#first-run) · [규칙](#rules) · [무료 플랜 한도](#limits) · [보안](#security) · [고지](#legal) · [워크숍](#workshop) · [폴더 구조](#structure)
+[무엇인가](#what) · [설치](#install) · [첫 실행](#first-run) · [환경과 제약](#environment) · [규칙](#rules) · [무료 플랜 한도](#limits) · [보안](#security) · [고지](#legal) · [워크숍](#workshop) · [폴더 구조](#structure)
 
 </div>
 
@@ -48,7 +48,7 @@
 
 ## 📦 설치
 
-필요한 것: Node.js(npx), Figma 데스크톱 앱. 네 가지 도구 모두 같은 서버 명령(`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`)을 씁니다.
+필요한 것: Node.js(npx), Figma 데스크톱 앱. 네 가지 도구 모두 같은 서버 명령(`npx -y github:java-jaydev/figma-starter-mcp#v0.1.2`)을 씁니다.
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (MCP 서버 등록 + 스킬 복사)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (MCP 서버 등록 + 스킬 복사)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,38 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. 플러그인 경로를 확인합니다.
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path
    ```
 2. Figma 데스크톱 앱에서 **Plugins > Development > Import plugin from manifest** 를 열고 위 경로의 `manifest.json` 을 고릅니다.
 3. **Plugins > Development > figma-starter** 를 실행합니다.
 4. AI 에이전트에게 "figma-starter 상태 알려줘" 라고 해서 `status` 도구가 주는 6자리 코드를 받습니다.
 5. 플러그인 창에 그 코드를 입력합니다.
 
-연결은 한 번만 하면 됩니다. 페어링을 지우려면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair` 를 실행하고 AI 세션을 모두 닫았다가 다시 시작하세요.
+연결은 한 번만 하면 됩니다. 페어링을 지우려면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 unpair` 를 실행하고 AI 세션을 모두 닫았다가 다시 시작하세요.
+
+<a id="environment"></a>
+
+## 🧪 확인한 환경과 알려진 제약
+
+확인 기록은 [docs/verification/](docs/verification/) 에 있습니다. 마지막 확인일은 2026-11-11 입니다.
+
+| 환경 | 상태 |
+|---|---|
+| macOS, Figma 데스크톱 앱, Starter 플랜 | 확인 |
+| Claude Code 에 MCP 서버를 직접 등록 (`claude mcp add`, 빈 npx 캐시에서 설치) | 확인 |
+| Windows, Linux | 확인 못 함 |
+| Claude Code 플러그인 마켓플레이스, Codex, Gemini CLI, Grok Build | 확인 못 함 |
+
+알려진 제약:
+
+- Figma 데스크톱 앱에서만 동작합니다. 개발용 플러그인 창이 열려 있어야 명령이 들어갑니다.
+- Figma 는 개발용 플러그인을 한 번에 하나만 실행합니다. 다른 개발용 플러그인을 띄우면 figma-starter 가 닫힙니다.
+- variant 는 Figma 에서 직접 만듭니다 (컴포넌트들을 선택하고 Combine as variants).
+- 칠에 색 변수를 연결하면 칠의 투명도 대신 변수 값의 알파가 쓰입니다. 반투명은 알파가 있는 색 변수로 만듭니다.
+- 연결은 열렸는데 인증에서 실패해도 플러그인 창에는 "Server not running" 으로 보일 수 있습니다.
+- `read_page` 는 기본으로 깊이 2 까지만 읽습니다. 더 읽을 노드는 `read_nodes` 로 읽습니다.
+
+확인 못 한 환경에서 써 보셨다면 [버그 제보 양식](https://github.com/java-jaydev/figma-starter-mcp/issues/new?template=bug_report.yml)으로 알려 주세요. 잘 되었다는 소식도 반갑습니다.
 
 <a id="rules"></a>
 

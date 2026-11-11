@@ -21,7 +21,7 @@
 
 [한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md) · **简体中文**
 
-[这是什么](#what) · [安装](#install) · [首次运行](#first-run) · [规则](#rules) · [免费版限制](#limits) · [安全](#security) · [声明](#legal) · [工作坊](#workshop) · [目录结构](#structure)
+[这是什么](#what) · [安装](#install) · [首次运行](#first-run) · [环境与限制](#environment) · [规则](#rules) · [免费版限制](#limits) · [安全](#security) · [声明](#legal) · [工作坊](#workshop) · [目录结构](#structure)
 
 </div>
 
@@ -48,7 +48,7 @@
 
 ## 📦 安装
 
-需要: Node.js (npx) 和 Figma 桌面应用。四种工具都使用同一条服务器命令 (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`)。
+需要: Node.js (npx) 和 Figma 桌面应用。四种工具都使用同一条服务器命令 (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.2`)。
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (注册 MCP 服务器 + 复制技能)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (注册 MCP 服务器 + 复制技能)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,38 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. 查看插件路径。
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path
    ```
 2. 在 Figma 桌面应用中打开 **Plugins > Development > Import plugin from manifest**,选择该路径下的 `manifest.json`。
 3. 运行 **Plugins > Development > figma-starter**。
 4. 让 AI 助手"告诉我 figma-starter 的状态",从 `status` 工具拿到 6 位字符的配对码。
 5. 在插件窗口中输入这个码。
 
-只需配对一次。要清除配对,运行 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair`,关闭所有 AI 会话后再重新开始。
+只需配对一次。要清除配对,运行 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 unpair`,关闭所有 AI 会话后再重新开始。
+
+<a id="environment"></a>
+
+## 🧪 已验证的环境与已知限制
+
+验证记录在 [docs/verification/](docs/verification/)。最后验证日期为 2026-11-11。
+
+| 环境 | 状态 |
+|---|---|
+| macOS、Figma 桌面应用、Starter 方案 | 已验证 |
+| 在 Claude Code 中手动添加 MCP 服务器 (`claude mcp add`,从空的 npx 缓存安装) | 已验证 |
+| Windows、Linux | 未验证 |
+| Claude Code 插件市场、Codex、Gemini CLI、Grok Build | 未验证 |
+
+已知限制:
+
+- 只能在 Figma 桌面应用中使用。开发插件窗口需要保持打开,命令才能送达。
+- Figma 同时只能运行一个开发插件。启动另一个开发插件会关闭 figma-starter。
+- 变体 (variant) 需要在 Figma 中手动创建 (选中组件后 Combine as variants)。
+- 给填充绑定颜色变量后,填充的不透明度会被变量值的 alpha 取代。半透明请用带 alpha 的颜色变量。
+- 如果连接已打开但认证失败,插件窗口也可能显示 "Server not running"。
+- `read_page` 默认只读到第 2 层。更深的节点请用 `read_nodes` 读取。
+
+如果你在未验证的环境中试用过,请通过 [问题报告表单](https://github.com/java-jaydev/figma-starter-mcp/issues/new?template=bug_report.yml) 告诉我们。能正常使用的反馈也非常欢迎。
 
 <a id="rules"></a>
 

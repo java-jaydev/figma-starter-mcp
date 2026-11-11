@@ -30,7 +30,7 @@ description: Figma 무료(Starter) 플랜에서 개발자 친화적으로 화면
 
 ## 순서
 
-1. **연결 확인**: `status` 를 부른다. 연결되어 있지 않으면 사용자에게 Figma 데스크톱 앱에서 Plugins > Development > figma-starter 를 실행하고 `status` 가 준 코드를 입력하게 안내한다. 코드가 없으면 `status` 를 `renewPairingCode: true` 로 다시 부른다. 처음이면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path` 가 출력하는 manifest 경로를 Plugins > Development > Import plugin from manifest 로 불러오게 한다.
+1. **연결 확인**: `status` 를 부른다. 연결되어 있지 않으면 사용자에게 Figma 데스크톱 앱에서 Plugins > Development > figma-starter 를 실행하고 `status` 가 준 코드를 입력하게 안내한다. 코드가 없으면 `status` 를 `renewPairingCode: true` 로 다시 부른다. 처음이면 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path` 가 출력하는 manifest 경로를 Plugins > Development > Import plugin from manifest 로 불러오게 한다.
 2. **기존 것 읽기**: `list_variables`, `list_styles`, `list_components` 로 이미 있는 토큰, 텍스트 스타일, 컴포넌트를 확인한다. 있는 것은 다시 만들지 않고 재사용한다. 어디에 그릴지 필요하면 `read_page` 나 `read_selection`.
 3. **토큰부터**: 필요한 변수가 없으면 먼저 `upsert_variables` (이름 `color/bg/default` 형태), 글꼴은 `upsert_text_styles`. Starter 는 라이트/다크를 컬렉션 2개로 나눈다. 시스템을 처음 세우면 `create_section` 으로 Foundations, Components, Patterns 를 만든다.
 4. **오토 레이아웃으로 구성**: `create_frame` (기본 VERTICAL), `create_text`, `create_instance`, 필요하면 `create_component` 와 `add_component_property`. 값은 `{var: "..."}` 로 넘긴다. 변수로 못 만드는 값만 `{raw, reason}`. 이름은 처음부터 역할 이름으로 짓는다. 여러 개를 한 번에 만들 때는 `batch` 로 묶는다 (한 번의 되돌리기, 첫 오류에서 중단).
