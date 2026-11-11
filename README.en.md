@@ -21,7 +21,7 @@
 
 [한국어](README.md) · **English** · [日本語](README.ja.md) · [简体中文](README.zh.md)
 
-[What it is](#what) · [Install](#install) · [First run](#first-run) · [Rules](#rules) · [Starter limits](#limits) · [Security](#security) · [Notice](#legal) · [Workshop](#workshop) · [Structure](#structure)
+[What it is](#what) · [Install](#install) · [First run](#first-run) · [Environments](#environment) · [Rules](#rules) · [Starter limits](#limits) · [Security](#security) · [Notice](#legal) · [Workshop](#workshop) · [Structure](#structure)
 
 </div>
 
@@ -48,7 +48,7 @@ The skills (`figma-build`, `figma-to-code`) teach the agent this order. After in
 
 ## 📦 Install
 
-You need Node.js (for npx) and the Figma desktop app. All four tools use the same server command (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`).
+You need Node.js (for npx) and the Figma desktop app. All four tools use the same server command (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.2`).
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@ The repo's `.mcp.json` registers the MCP server.
 <summary><b>Codex</b> (register MCP server + copy skills)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (register MCP server + copy skills)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.2
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,38 @@ Details and verification status: [Install on Grok Build](docs/install/grok.en.md
 
 1. Find the plugin path.
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 plugin-path
    ```
 2. In the Figma desktop app, open **Plugins > Development > Import plugin from manifest** and pick the `manifest.json` at that path.
 3. Run **Plugins > Development > figma-starter**.
 4. Ask your AI agent "what is the figma-starter status?" to get the 6-character code from the `status` tool.
 5. Enter that code in the plugin window.
 
-You only pair once. To clear the pairing, run `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair`, close all AI sessions, and start again.
+You only pair once. To clear the pairing, run `npx -y github:java-jaydev/figma-starter-mcp#v0.1.2 unpair`, close all AI sessions, and start again.
+
+<a id="environment"></a>
+
+## 🧪 Tested environments and known limits
+
+Check records live in [docs/verification/](docs/verification/). Last checked on 2026-11-11.
+
+| Environment | Status |
+|---|---|
+| macOS, Figma desktop app, Starter plan | Checked |
+| Claude Code with the MCP server added by hand (`claude mcp add`, installed from an empty npx cache) | Checked |
+| Windows, Linux | Not checked |
+| Claude Code plugin marketplace, Codex, Gemini CLI, Grok Build | Not checked |
+
+Known limits:
+
+- Works only in the Figma desktop app. The development plugin window must stay open for commands to arrive.
+- Figma runs one development plugin at a time. Starting another one closes figma-starter.
+- Variants are made by hand in Figma (select the components, then Combine as variants).
+- When a color variable is bound to a fill, the variable's alpha replaces the fill's opacity. Make translucent colors as color variables with alpha.
+- If the connection opens but authentication fails, the plugin window may still say "Server not running".
+- `read_page` reads only 2 levels deep by default. Read deeper nodes with `read_nodes`.
+
+If you try it in an environment we have not checked, please tell us with the [bug report form](https://github.com/java-jaydev/figma-starter-mcp/issues/new?template=bug_report.yml). Reports that it works are welcome too.
 
 <a id="rules"></a>
 

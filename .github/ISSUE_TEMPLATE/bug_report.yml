@@ -1,0 +1,64 @@
+name: Bug report / 버그 제보
+description: Something does not work in your setup. 내 환경에서 동작하지 않는 것을 알려 주세요.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please remove email addresses, account names and file names you do not want to share before you submit.
+        올리기 전에 이메일, 계정 이름, 공개하고 싶지 않은 파일 이름은 지워 주세요.
+  - type: input
+    id: version
+    attributes:
+      label: figma-starter-mcp version / 버전
+      placeholder: v0.1.2
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS and version / 운영체제와 버전
+      placeholder: macOS 15.5, Windows 11 24H2, Ubuntu 24.04
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: AI tool and version / AI 도구와 버전
+      description: How you installed it, too (plugin marketplace, extension, manual MCP config). 설치 방법도 적어 주세요.
+      placeholder: Claude Code 2.x via plugin marketplace, Codex CLI, Gemini CLI extension, Grok Build
+    validations:
+      required: true
+  - type: input
+    id: figma
+    attributes:
+      label: Figma desktop version and plan / Figma 데스크톱 버전과 플랜
+      description: Figma > About Figma.
+      placeholder: 125.x, Starter
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version / Node.js 버전
+      placeholder: "node -v"
+  - type: textarea
+    id: status
+    attributes:
+      label: Output of the status tool / status 도구 출력
+      description: Ask your AI tool "figma-starter status" and paste the result. AI 도구에게 "figma-starter 상태 알려줘" 라고 해서 나온 결과를 붙여 주세요.
+      render: json
+  - type: textarea
+    id: plugin
+    attributes:
+      label: Plugin window / 플러그인 창 상태
+      description: What the figma-starter plugin window shows (for example Connected, Server not running, a pairing code prompt, an error). A screenshot that shows only the plugin window is welcome. 화면 문구나 플러그인 창만 담긴 스크린샷을 올려 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did, what you expected, what happened / 한 일, 기대한 결과, 실제 결과
+      description: Include the exact error text. 오류 문구는 그대로 붙여 주세요.
+    validations:
+      required: true
