@@ -23,9 +23,9 @@ test("src/ has no Figma REST API or token strings", () => {
   expect(bad).toEqual([]);
 });
 
-test("manifest devAllowedDomains is exactly the two localhost WebSocket origins", () => {
+test("manifest devAllowedDomains is exactly the localhost WebSocket origin", () => {
   const manifest = JSON.parse(read("src/plugin/manifest.json"));
-  expect(manifest.networkAccess.devAllowedDomains).toEqual(["ws://localhost:39917", "ws://127.0.0.1:39917"]);
+  expect(manifest.networkAccess.devAllowedDomains).toEqual(["ws://localhost:39917"]);
 });
 
 test(".mcp.json and gemini-extension.json register the same command", () => {

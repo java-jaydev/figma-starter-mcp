@@ -48,7 +48,7 @@
 
 ## 📦 安装
 
-需要: Node.js (npx) 和 Figma 桌面应用。四种工具都使用同一条服务器命令 (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.0`)。
+需要: Node.js (npx) 和 Figma 桌面应用。四种工具都使用同一条服务器命令 (`npx -y github:java-jaydev/figma-starter-mcp#v0.1.1`)。
 
 <a id="claude-code"></a>
 <details open>
@@ -68,7 +68,7 @@
 <summary><b>Codex</b> (注册 MCP 服务器 + 复制技能)</summary>
 
 ```bash
-codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+codex mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -95,7 +95,7 @@ gemini extensions install https://github.com/java-jaydev/figma-starter-mcp
 <summary><b>Grok Build</b> (注册 MCP 服务器 + 复制技能)</summary>
 
 ```bash
-grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.0
+grok mcp add figma-starter -- npx -y github:java-jaydev/figma-starter-mcp#v0.1.1
 git clone https://github.com/java-jaydev/figma-starter-mcp.git
 mkdir -p ~/.agents/skills
 cp -R figma-starter-mcp/skills/* ~/.agents/skills/
@@ -111,14 +111,14 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 1. 查看插件路径。
    ```bash
-   npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 plugin-path
+   npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 plugin-path
    ```
 2. 在 Figma 桌面应用中打开 **Plugins > Development > Import plugin from manifest**,选择该路径下的 `manifest.json`。
 3. 运行 **Plugins > Development > figma-starter**。
 4. 让 AI 助手"告诉我 figma-starter 的状态",从 `status` 工具拿到 6 位字符的配对码。
 5. 在插件窗口中输入这个码。
 
-只需配对一次。要清除配对,运行 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.0 unpair`,关闭所有 AI 会话后再重新开始。
+只需配对一次。要清除配对,运行 `npx -y github:java-jaydev/figma-starter-mcp#v0.1.1 unpair`,关闭所有 AI 会话后再重新开始。
 
 <a id="rules"></a>
 
@@ -169,7 +169,7 @@ cp -R figma-starter-mcp/skills/* ~/.agents/skills/
 
 ## 🔒 安全说明
 
-- **仅限 localhost**: 服务器只监听 `127.0.0.1`。插件清单也只允许 `ws://localhost:39917` 和 `ws://127.0.0.1:39917`。
+- **仅限 localhost**: 服务器只监听 `127.0.0.1`。插件清单也只允许 `ws://localhost:39917`。Figma 不接受 `devAllowedDomains` 中的 IP 地址。
 - **配对**: 输入一次 6 位字符的配对码,服务器和插件通过 challenge-response 互相验证。
 - **保护密钥**: 配对完成后不再发送密钥,之后的命令都带签名。
 - **配对尝试限速**: 输错配对码会被 throttle 限速。

@@ -15,7 +15,7 @@ describe("plugin build", () => {
     expect(m).toMatchObject({ name: "figma-starter", id: "figma-starter-dev", main: "code.js", ui: "ui.html" });
     expect(m.networkAccess).toEqual({
       allowedDomains: ["none"],
-      devAllowedDomains: ["ws://localhost:39917", "ws://127.0.0.1:39917"],
+      devAllowedDomains: ["ws://localhost:39917"],
       reasoning: "Connects to the figma-starter-mcp server running on this computer.",
     });
   });
@@ -23,12 +23,12 @@ describe("plugin build", () => {
   it("inlines the UI script into ui.html", () => {
     const html = read("ui.html");
     expect(html).not.toContain("UI_SCRIPT");
-    expect(html).toContain("ws://127.0.0.1:");
-    expect(html).toContain("crypto.subtle");
+    expect(html).toContain("ws://localhost:");
+    expect(html).not.toContain("crypto.subtle");
     expect(html.match(/<script>/g)).toHaveLength(1);
     // Room for a pasted code with spaces; the client trims and checks the length.
     expect(html).toContain('maxlength="16"');
-    expect(html).toContain("e.source !== parent");
+    expect(html).not.toContain("e.source !== parent");
   });
 
   it("emits ES2017 code without newer syntax", () => {

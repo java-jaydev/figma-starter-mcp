@@ -17,7 +17,7 @@ import { clientProof, cmdSigPayload, hubProof, sameProof, validNonce, type Hmac 
 import { COMMANDS, PORT, type Command, type Envelope, type Result } from "../../shared/protocol.ts";
 import type { UiToMain } from "../messages.ts";
 
-export const HUB_URL = `ws://127.0.0.1:${PORT}`;
+export const HUB_URL = `ws://localhost:${PORT}`;
 export const RECONNECT_MS = 2000;
 export const LOG_SIZE = 20;
 const REPLACED_CLOSE_CODE = 4000; // hub: "replaced by a newer plugin connection"

@@ -8,7 +8,7 @@
   "documentAccess": "dynamic-page",
   "networkAccess": {
     "allowedDomains": ["none"],
-    "devAllowedDomains": ["ws://localhost:39917", "ws://127.0.0.1:39917"],
+    "devAllowedDomains": ["ws://localhost:39917"],
     "reasoning": "Connects to the figma-starter-mcp server running on this computer."
   }
 }

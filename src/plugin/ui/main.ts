@@ -1,7 +1,7 @@
 // DOM shell of the UI iframe. Bundled by scripts/build-plugin.mjs and inlined into dist/plugin/ui.html.
 import type { MainToUi, UiToMain } from "../messages.ts";
 import { createClient, type ClientView, type SocketLike } from "./client.ts";
-import { randomNonce, webCryptoHmac } from "./webcrypto.ts";
+import { randomNonce, uiHmac } from "./webcrypto.ts";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const statusEl = $("status");
@@ -36,7 +36,7 @@ function render(v: ClientView) {
 }
 
 const client = createClient({
-  hmac: webCryptoHmac(crypto.subtle),
+  hmac: uiHmac,
   nonce: randomNonce,
   openSocket: (url) => new WebSocket(url) as unknown as SocketLike,
   toMain,
@@ -57,8 +57,8 @@ unpairBtn.addEventListener("click", () => client.unpair());
 pairAgainBtn.addEventListener("click", () => client.pairAgain());
 
 onmessage = (e: MessageEvent) => {
-  // Only the plugin main thread (via the parent frame) may talk to this UI.
-  if (e.source !== parent) return;
+  // Figma desktop delivers main-thread messages from a frame other than `parent` (checked in real
+  // Figma, 2026-11-11), so the sender is not checked here. Hub commands are verified by signature.
   const msg = e.data?.pluginMessage as MainToUi | undefined;
   if (!msg) return;
   if (msg.type === "init") {
