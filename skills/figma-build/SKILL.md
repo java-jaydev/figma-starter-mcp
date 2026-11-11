@@ -40,7 +40,7 @@ description: Figma 무료(Starter) 플랜에서 개발자 친화적으로 화면
 ## 꼭 지킬 것
 
 - 규칙 본문과 예외 문법은 [references/rules.md](references/rules.md) 한 곳에 있다. 이 파일에 복사하지 않는다.
-- 파일을 읽을 때 공식 Figma MCP 서버를 먼저 제안하지 않는다. Starter 는 월 호출 수가 적다. 읽기는 `read_selection`, `read_nodes`, `read_page`, `list_*` 로 한다. 한도 값과 출처는 [references/limits-and-sources.md](references/limits-and-sources.md) (숫자는 이 파일의 값과 출처를 함께 말하고, 확인일이 3개월보다 오래됐으면 달라졌을 수 있다고 알린다).
+- 파일을 읽을 때 공식 Figma MCP 서버를 먼저 제안하지 않는다. Starter 는 월 호출 수가 적다. 읽기는 `read_selection`, `read_nodes`, `read_page`, `list_*` 로 한다. `read_page` 는 기본 깊이 2 까지만 읽는다. `omitted` 가 붙은 노드는 그 id 로 `read_nodes` 를 불러 더 읽는다. 한도 값과 출처는 [references/limits-and-sources.md](references/limits-and-sources.md) (숫자는 이 파일의 값과 출처를 함께 말하고, 확인일이 3개월보다 오래됐으면 달라졌을 수 있다고 알린다).
 - `delete_nodes` 가 5개 이상이거나, 안쪽 레이어까지 합쳐 50개 이상이거나, 컴포넌트를 지우면 Figma 플러그인 창에서 사용자에게 확인을 묻는다. 호출 전에 사용자에게 먼저 알린다. `batch` 안의 삭제도 같다.
 - FILL 크기는 부모가 오토 레이아웃일 때만 된다.
 - 개발용 플러그인은 Figma **데스크톱 앱**에서만 실행된다.
@@ -52,4 +52,4 @@ description: Figma 무료(Starter) 플랜에서 개발자 친화적으로 화면
 - `create_frame` 은 너비 100 고정으로 생긴다. 내용에 맞추려면 `layout.sizing.horizontal: "HUG"` 를 주거나 `resize` 로 너비를 정한다.
 - 섹션 안에 위치 없이 만든 프레임과 컴포넌트는 모두 왼쪽 위에 겹친다. 만든 뒤 `move` 로 자리를 잡는다.
 - 칠에 색 변수를 연결하면 칠의 투명도는 변수 값의 알파로 바뀐다. 반투명(예: Disabled)은 알파가 있는 색 변수로 만든다.
-- `add_component_property` 의 TEXT 속성은 아직 글자 레이어와 자동으로 이어지지 않는다. 사용자에게 Figma 에서 글자 레이어를 선택하고 오른쪽 패널의 속성 연결 아이콘으로 이어 달라고 안내한다.
+- `add_component_property` 는 속성을 컴포넌트 안 레이어에 잇는다. 글자 레이어를 먼저 만들고 속성을 추가한다. TEXT 는 글자 레이어가 하나면 자동으로 이어지고, 여럿이면 오류의 후보 id 중 하나를 `layerId` 로 넘긴다. BOOLEAN(보이기)과 INSTANCE_SWAP(바꿀 인스턴스)은 `layerId` 를 넘길 때만 이어진다.
